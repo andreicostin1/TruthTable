@@ -1,0 +1,31 @@
+{
+  "expo": {
+    "name": "Truth Table",
+    "slug": "TruthTable",
+    "privacy": "public",
+    "sdkVersion": "35.0.0",
+    "platforms": [
+      "ios",
+      "android",
+      "web"
+    ],
+    "version": "1.1.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon-droid.png",
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "bundleIdentifier": "com.ad.truthtable",
+      "supportsTablet": true
+    },
+    "android": {
+      "package": "com.ad.truthtable",
+      "versionCode": 3
+    },
+    "description": "App for evaluating truth tables step by step"
+  }
+}

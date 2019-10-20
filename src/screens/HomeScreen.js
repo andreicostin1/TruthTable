@@ -1,0 +1,571 @@
+import React, { useState, useEffect } from 'react';
+import { LinearGradient } from 'expo-linear-gradient';
+import TruthTableGenerator from '../Generator/Generator';
+import * as Font from 'expo-font';
+
+import {
+	Text,
+	StyleSheet,
+	View,
+	TouchableOpacity,
+	TextInput,
+	Alert,
+	Platform,
+	Image
+} from 'react-native';
+
+const HomeScreen = ({ navigation }) => {
+	const [entry, setEntry] = useState('');
+	const [fontLoaded, setFontLoaded] = useState(false);
+	const [gradStart, setGradStart] = useState('#5831F0');
+	const [gradEnd, setGrabEnd] = useState('#92CBF6');
+	const [selGrad, setSelGrad] = useState(1);
+
+	const grads = [
+		['#5831F0', '#92CBF6'],
+		['#EB5757', '#000000'],
+		['#B2FEFA', '#0ED2F7'],
+		['#30E8BF', '#FF8235'],
+		['#D66D75', '#E29587'],
+		['#20002c', '#cbb4d4'],
+		['#34e89e', '#0f3443'],
+		['#6190E8', '#A7BFE8'],
+		['#44A08D', '#093637'],
+		['#200122', '#6f0000'],
+		['#0575E6', '#021B79'],
+		['#4568DC', '#B06AB3'],
+		['#43C6AC', '#191654'],
+		['#43C6AC', '#F8FFAE'],
+		['#F0F2F0', '#000C40'],
+		['#E8CBC0', '#636FA4'],
+		['#DCE35B', '#45B649'],
+		['#c0c0aa', '#1cefff'],
+		['#9CECFB', '#0052D4'],
+		['#3494E6', '#EC6EAD'],
+		['#67B26F', '#4ca2cd'],
+		['#F3904F', '#3B4371'],
+		['#ee0979', '#ff6a00'],
+		['#00c3ff', '#ffff1c']
+	];
+
+	useEffect(() => {
+		if (fontLoaded) return;
+		Font.loadAsync({
+			Ubuntu: require('../../assets/fonts/Ubuntu-Regular.ttf'),
+			UbuntuBold: require('../../assets/fonts/Ubuntu-Medium.ttf')
+		}).then(() => {
+			setFontLoaded(true);
+		});
+	});
+
+	if (!fontLoaded) return null;
+
+	return (
+		<LinearGradient
+			colors={[gradStart, gradEnd]}
+			start={{ x: 1, y: 0 }}
+			end={{ x: 0, y: 1 }}
+			style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+			<View style={styles.infoView}>
+				<TouchableOpacity
+					onPress={() => {
+						setSelGrad(selGrad + 1);
+						if (selGrad >= grads.length - 1) {
+							setSelGrad(0);
+						}
+						setGradStart(grads[selGrad][0]);
+						setGrabEnd(grads[selGrad][1]);
+					}}
+					onLongPress={() => {
+						setGradStart(grads[0][0]);
+						setGrabEnd(grads[0][1]);
+						setSelGrad(0);
+					}}>
+					<Text style={styles.header}>Truth Table Generator</Text>
+				</TouchableOpacity>
+				<TouchableOpacity
+					style={styles.infoButTouch}
+					onPress={() => {
+						navigation.navigate('Info', {
+							gradStart,
+							gradEnd
+						});
+					}}>
+					<Image
+						style={styles.infoBut}
+						source={require('../../assets/info.png')}
+					/>
+				</TouchableOpacity>
+			</View>
+			<View style={styles.bubble1}></View>
+			<View style={styles.bubble3}></View>
+
+			<View style={styles.page}>
+				<View style={styles.input}>
+					<View style={styles.bubble2}></View>
+					<View style={styles.accentWrapper}>
+						<View style={styles.accent}></View>
+						<TextInput
+							style={styles.entry}
+							placeholder='Input formula'
+							placeholderTextColor='#7777C8'
+							autoCorrect={false}
+							value={entry}
+							multiline={true}
+							editable={false}
+						/>
+					</View>
+				</View>
+
+				<View style={styles.inputGrid}>
+					<View style={styles.inputRowView}>
+						<TouchableOpacity
+							style={styles.inputTouch}
+							onPress={() => {
+								setEntry(entry + 'A');
+							}}>
+							<View style={styles.inputLettersView}>
+								<Text style={styles.inputText}>A</Text>
+							</View>
+						</TouchableOpacity>
+						<TouchableOpacity
+							style={styles.inputTouch}
+							onPress={() => {
+								setEntry(entry + 'B');
+							}}>
+							<View style={styles.inputLettersView}>
+								<Text style={styles.inputText}>B</Text>
+							</View>
+						</TouchableOpacity>
+						<TouchableOpacity
+							style={styles.inputTouch}
+							onPress={() => {
+								setEntry(entry + 'C');
+							}}>
+							<View style={styles.inputLettersView}>
+								<Text style={styles.inputText}>C</Text>
+							</View>
+						</TouchableOpacity>
+						<TouchableOpacity
+							style={styles.inputTouch}
+							onPress={() => {
+								setEntry(entry + 'D');
+							}}>
+							<View style={styles.inputLettersView}>
+								<Text style={styles.inputText}>D</Text>
+							</View>
+						</TouchableOpacity>
+					</View>
+					<View style={styles.inputRowView}>
+						<TouchableOpacity
+							style={styles.inputTouch}
+							onPress={() => {
+								setEntry(entry + 'X');
+							}}>
+							<View style={styles.inputLettersView}>
+								<Text style={styles.inputText}>X</Text>
+							</View>
+						</TouchableOpacity>
+						<TouchableOpacity
+							style={styles.inputTouch}
+							onPress={() => {
+								setEntry(entry + 'Y');
+							}}>
+							<View style={styles.inputLettersView}>
+								<Text style={styles.inputText}>Y</Text>
+							</View>
+						</TouchableOpacity>
+						<TouchableOpacity
+							style={styles.inputTouch}
+							onPress={() => {
+								setEntry(entry + 'Z');
+							}}>
+							<View style={styles.inputLettersView}>
+								<Text style={styles.inputText}>Z</Text>
+							</View>
+						</TouchableOpacity>
+						<TouchableOpacity
+							style={styles.inputTouch}
+							onPress={() => {
+								setEntry(entry + 'W');
+							}}>
+							<View style={styles.inputLettersView}>
+								<Text style={styles.inputText}>W</Text>
+							</View>
+						</TouchableOpacity>
+					</View>
+					<View
+						style={{
+							...styles.inputRowView,
+							marginVertical: 7,
+							justifyContent: 'space-around',
+							height: 30
+						}}>
+						<TouchableOpacity
+							style={{ ...styles.tf }}
+							onPress={() => {
+								setEntry(entry + 'true');
+							}}>
+							<View
+								style={{
+									justifyContent: 'center',
+									alignItems: 'center',
+									flex: 1
+								}}>
+								<Text style={styles.tfText}>true</Text>
+							</View>
+						</TouchableOpacity>
+						<TouchableOpacity
+							style={styles.xor}
+							onPress={() => {
+								setEntry(entry + '⊕');
+							}}>
+							<View style={{}}>
+								<Text style={styles.xorText}>⊕</Text>
+							</View>
+						</TouchableOpacity>
+						<TouchableOpacity
+							style={{ ...styles.tf }}
+							onPress={() => {
+								setEntry(entry + 'false');
+							}}>
+							<View
+								style={{
+									justifyContent: 'center',
+									alignItems: 'center',
+									flex: 1
+								}}>
+								<Text style={styles.tfText}>false</Text>
+							</View>
+						</TouchableOpacity>
+					</View>
+					<View style={{ ...styles.inputRowView }}>
+						<TouchableOpacity
+							style={styles.inputTouch}
+							onPress={() => {
+								setEntry(entry + '∧');
+							}}>
+							<View style={styles.inputSymbolsView}>
+								<Text style={{ ...styles.inputSymbols, ...styles.andOr }}>
+									∧
+								</Text>
+							</View>
+						</TouchableOpacity>
+						<TouchableOpacity
+							style={styles.inputTouch}
+							onPress={() => {
+								setEntry(entry + '∨');
+							}}>
+							<View style={styles.inputSymbolsView}>
+								<Text style={{ ...styles.inputSymbols, ...styles.andOr }}>
+									∨
+								</Text>
+							</View>
+						</TouchableOpacity>
+						<TouchableOpacity
+							style={styles.inputTouch}
+							onPress={() => {
+								setEntry(entry + '(');
+							}}>
+							<View style={styles.inputSymbolsView}>
+								<Text style={styles.inputSymbols}>(</Text>
+							</View>
+						</TouchableOpacity>
+						<TouchableOpacity
+							style={styles.inputTouch}
+							onPress={() => {
+								setEntry(entry + ')');
+							}}>
+							<View style={styles.inputSymbolsView}>
+								<Text style={styles.inputSymbols}>)</Text>
+							</View>
+						</TouchableOpacity>
+					</View>
+					<View style={styles.inputRowView}>
+						<TouchableOpacity
+							style={styles.inputTouch}
+							onPress={() => {
+								setEntry(entry + '¬');
+							}}>
+							<View style={styles.inputSymbolsView}>
+								<Text style={styles.inputSymbols}>¬</Text>
+							</View>
+						</TouchableOpacity>
+						<TouchableOpacity
+							style={styles.inputTouch}
+							onPress={() => {
+								setEntry(entry + '⇒');
+							}}>
+							<View style={styles.inputSymbolsView}>
+								<Text style={styles.inputSymbols}>⇒</Text>
+							</View>
+						</TouchableOpacity>
+						<TouchableOpacity
+							style={styles.inputTouch}
+							onPress={() => {
+								setEntry(entry + '≡');
+							}}>
+							<View style={styles.inputSymbolsView}>
+								<Text style={styles.inputEquiv}>≡</Text>
+							</View>
+						</TouchableOpacity>
+						<TouchableOpacity
+							style={styles.inputTouch}
+							onPress={() => {
+								if (entry.length != 0 || entry != '') {
+									if (
+										entry.substring(entry.length - 4, entry.length) === 'true'
+									) {
+										setEntry(entry.substring(0, entry.length - 4));
+									} else if (
+										entry.substring(entry.length - 5, entry.length) === 'false'
+									) {
+										setEntry(entry.substring(0, entry.length - 5));
+									} else {
+										setEntry(entry.substring(0, entry.length - 1));
+									}
+								}
+							}}
+							onLongPress={() => {
+								setEntry('');
+							}}>
+							<View style={styles.inputSymbolsView}>
+								<Text style={styles.del}>del</Text>
+							</View>
+						</TouchableOpacity>
+					</View>
+				</View>
+				<TouchableOpacity
+					style={{ alignSelf: 'center' }}
+					onPress={() => {
+						if (entry.length > 0) {
+							try {
+								let formula = entry
+									.replace(/true/g, 't')
+									.replace(/false/g, 'f');
+
+								navigation.navigate('TruthTable', {
+									truthTable: new TruthTableGenerator(formula),
+									gradStart,
+									gradEnd
+								});
+							} catch (e) {
+								Alert.alert(
+									e.message,
+									'Please ensure your formula is well-formed!',
+									[{ text: 'OK', onPress: async () => this.exit }],
+									{ cancelable: false }
+								);
+							}
+						} else {
+							Alert.alert(
+								'Invalid Formula',
+								'Please enter a well formed formula',
+								[{ text: 'OK', onPress: async () => this.exit }],
+								{ cancelable: false }
+							);
+						}
+					}}>
+					<View style={styles.entryButton}>
+						<Text style={styles.entryText}> Generate </Text>
+					</View>
+				</TouchableOpacity>
+			</View>
+		</LinearGradient>
+	);
+};
+
+const styles = StyleSheet.create({
+	page: {
+		alignSelf: 'center',
+		width: '100%',
+		maxWidth: 400,
+		paddingHorizontal: 20
+	},
+	header: {
+		color: 'white',
+		fontSize: 26,
+		marginRight: 10,
+		fontFamily: 'UbuntuBold'
+	},
+	bubble1: {
+		position: 'absolute',
+		bottom: -35,
+		left: -25,
+		width: 210,
+		height: 210,
+		borderRadius: 105,
+		backgroundColor: 'rgba(255,255,255,0.1)',
+		zIndex: 0
+	},
+	bubble2: {
+		position: 'absolute',
+		top: -45,
+		right: -25,
+		width: 110,
+		height: 110,
+		borderRadius: 55,
+		backgroundColor: 'rgba(255,255,255,0.08)',
+		zIndex: 0
+	},
+	bubble3: {
+		position: 'absolute',
+		top: 30,
+		left: 5,
+		width: 60,
+		height: 60,
+		borderRadius: 39,
+		backgroundColor: 'rgba(255,255,255,0.06)',
+		zIndex: 0
+	},
+	input: {
+		backgroundColor: 'white',
+		shadowColor: '#000',
+		shadowOpacity: 0.1,
+		shadowRadius: 5,
+		shadowOffset: { width: 0, height: 3 },
+		zIndex: 10,
+		elevation: 4,
+		borderRadius: 5
+	},
+	accentWrapper: {
+		overflow: 'hidden'
+	},
+	accent: {
+		position: 'absolute',
+		top: ios() ? -3 : 0,
+		left: -60,
+		width: 68,
+		height: 68,
+		backgroundColor: '#7159de',
+		borderRadius: 34,
+		zIndex: 99
+	},
+	entry: {
+		color: '#393939',
+		paddingHorizontal: 30,
+		paddingTop: 20,
+		paddingVertical: 20,
+		borderRadius: 5,
+		backgroundColor: 'white',
+		fontSize: 19,
+		fontFamily: 'Ubuntu'
+	},
+	inputGrid: {
+		backgroundColor: 'white',
+		borderRadius: 5,
+		borderTopLeftRadius: 0,
+		borderTopRightRadius: 0,
+		marginBottom: 30,
+		marginHorizontal: 11,
+		paddingTop: 10,
+		paddingBottom: 10
+	},
+	entryButton: {
+		alignSelf: 'center',
+		paddingVertical: 13,
+		paddingHorizontal: 19,
+		borderRadius: 5,
+		backgroundColor: 'white',
+		shadowColor: 'black',
+		shadowOpacity: 0.12,
+		shadowRadius: 5,
+		shadowOffset: { width: 0, height: 5 },
+		elevation: 3
+	},
+	entryText: {
+		fontSize: 19,
+		color: '#685DC4',
+		alignSelf: 'center',
+		fontFamily: 'Ubuntu'
+	},
+	inputRowView: {
+		flexDirection: 'row',
+		justifyContent: 'space-between',
+		paddingHorizontal: 25
+	},
+	inputLettersView: {
+		backgroundColor: '#F0F3F6',
+		borderRadius: 10,
+		height: 50,
+		width: 50,
+		marginVertical: 4,
+		alignItems: 'center',
+		justifyContent: 'center'
+	},
+	inputText: {
+		color: '#393939',
+		fontSize: 16,
+		fontFamily: 'Ubuntu'
+	},
+	inputSymbols: {
+		color: '#393939',
+		fontSize: 16
+	},
+	inputEquiv: {
+		color: '#393939',
+		fontSize: 16
+	},
+	inputSymbolsView: {
+		backgroundColor: 'white',
+		borderColor: '#DADDE4',
+		borderWidth: 1,
+		borderRadius: 10,
+		height: 50,
+		width: 50,
+		marginVertical: 4,
+		alignItems: 'center',
+		justifyContent: 'center'
+	},
+	andOr: {
+		fontSize: ios() ? 20 : 16
+	},
+	del: {
+		color: 'red',
+		fontSize: 16,
+		fontFamily: 'Ubuntu'
+	},
+	tf: {
+		flex: 2,
+		backgroundColor: 'white',
+		borderColor: '#DADDE4',
+		borderWidth: 1,
+		borderRadius: 8
+	},
+	tfText: {
+		color: '#393939',
+		fontSize: 16,
+		fontFamily: 'Ubuntu'
+	},
+	xor: {
+		flex: 1,
+		alignItems: 'center',
+		justifyContent: 'center',
+		backgroundColor: 'white',
+		borderColor: '#DADDE4',
+		borderWidth: 1,
+		borderRadius: 8,
+		marginHorizontal: 10
+	},
+	xorText: {
+		color: '#393939',
+		fontSize: 20
+	},
+	infoView: {
+		flexDirection: 'row',
+		marginBottom: 60
+	},
+	infoButTouch: {
+		alignSelf: 'flex-end'
+	},
+	infoBut: {
+		height: 30,
+		width: 30
+	}
+});
+
+function ios() {
+	return Platform.OS === 'ios';
+}
+
+export default HomeScreen;
