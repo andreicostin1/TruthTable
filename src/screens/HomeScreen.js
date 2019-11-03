@@ -11,42 +11,18 @@ import {
 	TextInput,
 	Alert,
 	Platform,
-	Image
+	Image,
+	AsyncStorage
 } from 'react-native';
 
 const HomeScreen = ({ navigation }) => {
 	const [entry, setEntry] = useState('');
 	const [fontLoaded, setFontLoaded] = useState(false);
 	const [gradStart, setGradStart] = useState('#5831F0');
-	const [gradEnd, setGrabEnd] = useState('#92CBF6');
-	const [selGrad, setSelGrad] = useState(1);
-
-	const grads = [
-		['#5831F0', '#92CBF6'],
-		['#EB5757', '#000000'],
-		['#B2FEFA', '#0ED2F7'],
-		['#30E8BF', '#FF8235'],
-		['#D66D75', '#E29587'],
-		['#20002c', '#cbb4d4'],
-		['#34e89e', '#0f3443'],
-		['#6190E8', '#A7BFE8'],
-		['#44A08D', '#093637'],
-		['#200122', '#6f0000'],
-		['#0575E6', '#021B79'],
-		['#4568DC', '#B06AB3'],
-		['#43C6AC', '#191654'],
-		['#43C6AC', '#F8FFAE'],
-		['#F0F2F0', '#000C40'],
-		['#E8CBC0', '#636FA4'],
-		['#DCE35B', '#45B649'],
-		['#c0c0aa', '#1cefff'],
-		['#9CECFB', '#0052D4'],
-		['#3494E6', '#EC6EAD'],
-		['#67B26F', '#4ca2cd'],
-		['#F3904F', '#3B4371'],
-		['#ee0979', '#ff6a00'],
-		['#00c3ff', '#ffff1c']
-	];
+	const [gradEnd, setGradEnd] = useState('#92CBF6');
+	{
+		getGrad();
+	}
 
 	useEffect(() => {
 		if (fontLoaded) return;
@@ -58,6 +34,20 @@ const HomeScreen = ({ navigation }) => {
 		});
 	});
 
+	async function getGrad() {
+		try {
+			const s = await AsyncStorage.getItem('gradStart');
+			const e = await AsyncStorage.getItem('gradEnd');
+
+			if (s !== null && e != null) {
+				setGradStart(s);
+				setGradEnd(e);
+			}
+		} catch (error) {
+			Alert('Error')
+		}
+	}
+
 	if (!fontLoaded) return null;
 
 	return (
@@ -65,24 +55,10 @@ const HomeScreen = ({ navigation }) => {
 			colors={[gradStart, gradEnd]}
 			start={{ x: 1, y: 0 }}
 			end={{ x: 0, y: 1 }}
-			style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+			style={{ flex: 1, alignItems: 'center', justifyContent: 'center', paddingBottom: 20 }}>
 			<View style={styles.infoView}>
-				<TouchableOpacity
-					onPress={() => {
-						setSelGrad(selGrad + 1);
-						if (selGrad >= grads.length - 1) {
-							setSelGrad(0);
-						}
-						setGradStart(grads[selGrad][0]);
-						setGrabEnd(grads[selGrad][1]);
-					}}
-					onLongPress={() => {
-						setGradStart(grads[0][0]);
-						setGrabEnd(grads[0][1]);
-						setSelGrad(0);
-					}}>
-					<Text style={styles.header}>Truth Table Generator</Text>
-				</TouchableOpacity>
+				
+				<Text style={styles.header}>Truth Table Generator</Text>
 				<TouchableOpacity
 					style={styles.infoButTouch}
 					onPress={() => {
@@ -94,6 +70,16 @@ const HomeScreen = ({ navigation }) => {
 					<Image
 						style={styles.infoBut}
 						source={require('../../assets/info.png')}
+					/>
+				</TouchableOpacity>
+				<TouchableOpacity
+					style={{ alignSelf: 'flex-end', marginLeft: 10 }}
+					onPress={() => {
+						navigation.navigate('Settings', { getGrad, gradStart, gradEnd });
+					}}>
+					<Image
+						style={{ height: 30, width: 30 }}
+						source={require('../../assets/settings.png')}
 					/>
 				</TouchableOpacity>
 			</View>
@@ -330,7 +316,7 @@ const HomeScreen = ({ navigation }) => {
 								setEntry('');
 							}}>
 							<View style={styles.inputSymbolsView}>
-								<Text style={styles.del}>del</Text>
+								<Text style={styles.del}>Del</Text>
 							</View>
 						</TouchableOpacity>
 					</View>
@@ -384,7 +370,7 @@ const styles = StyleSheet.create({
 	},
 	header: {
 		color: 'white',
-		fontSize: 26,
+		fontSize: 24,
 		marginRight: 10,
 		fontFamily: 'UbuntuBold'
 	},

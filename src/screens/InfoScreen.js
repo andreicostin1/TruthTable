@@ -1,7 +1,6 @@
 import React from 'react';
 import { LinearGradient } from 'expo-linear-gradient';
 import TruthTableGenerator from '../Generator/Generator';
-import * as Font from 'expo-font';
 
 import { Text, StyleSheet, View, TouchableOpacity, Image } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -17,8 +16,6 @@ const InfoScreen = ({ navigation }) => {
 			style={{ flex: 1, paddingHorizontal: 23 }}>
 			<TouchableOpacity
 				style={{
-					position: 'absolute',
-					left: 0,
 					width: 'auto',
 					position: 'absolute',
 					top: 35,
