@@ -3,7 +3,7 @@ import { Text, StyleSheet, View, TouchableOpacity, Image } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { LinearGradient } from 'expo-linear-gradient';
 
-const TruthTable = function({ navigation }) {
+const TruthTable = function ({ navigation }) {
 	const truthTable = navigation.state.params.truthTable;
 	const gradStart = navigation.state.params.gradStart;
 	const gradEnd = navigation.state.params.gradEnd;
@@ -27,7 +27,10 @@ const TruthTable = function({ navigation }) {
 				col.push(
 					<View
 						key={Math.random()}
-						style={{...(i == values.length - 1 ? styles.noBorBot : styles.borBot), ...(i % 2 != 1 ? styles.grayBg : {})}}>
+						style={{
+							...(i == values.length - 1 ? styles.noBorBot : styles.borBot),
+							...(i % 2 != 1 ? styles.grayBg : {}),
+						}}>
 						<Text style={styles.tCell}>{value ? 'T' : 'F'}</Text>
 					</View>
 				);
@@ -49,9 +52,15 @@ const TruthTable = function({ navigation }) {
 			start={{ x: 1, y: 0 }}
 			end={{ x: 0, y: 1 }}
 			style={{ flex: 1 }}>
-			<View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginTop: 35 }}>
+			<View
+				style={{
+					flexDirection: 'row',
+					justifyContent: 'center',
+					alignItems: 'center',
+					marginTop: 55,
+				}}>
 				<TouchableOpacity
-					style={{ position: 'absolute', left: 0, width: 'auto' }}
+					style={{ position: 'absolute', left: 20, width: 'auto' }}
 					onPress={() => {
 						navigation.goBack();
 					}}>
@@ -96,20 +105,20 @@ const styles = StyleSheet.create({
 		paddingLeft: 2,
 		justifyContent: 'center',
 		alignItems: 'center',
-		fontFamily: 'Ubuntu'
+		fontFamily: 'Ubuntu',
 	},
 	wrapper: {
-		padding: 10
+		padding: 10,
 	},
 	scrollView: {
 		flexGrow: 0,
 		flexBasis: 'auto',
-		borderRadius: 10
+		borderRadius: 10,
 	},
 	backBut: {
 		height: 30,
 		width: 30,
-		marginLeft: 5
+		marginLeft: 5,
 	},
 	tableContainer: {
 		backgroundColor: 'white',
@@ -118,38 +127,38 @@ const styles = StyleSheet.create({
 		flexDirection: 'row',
 		alignSelf: 'center',
 		paddingHorizontal: 10,
-		overflow: 'hidden'
+		overflow: 'hidden',
 	},
 	headerText: {
 		fontSize: 18,
 		color: '#fff',
-		fontFamily: 'UbuntuBold'
+		fontFamily: 'UbuntuBold',
 	},
 	borBot: {
 		borderBottomColor: 'rgba(0, 0, 0, 0.09)',
 		borderBottomWidth: 1,
 		justifyContent: 'center',
 		alignItems: 'center',
-		height: 35
+		height: 35,
 	},
 	noBorBot: {
 		justifyContent: 'center',
 		alignItems: 'center',
-		height: 35
+		height: 35,
 	},
 	tCell: {
 		fontSize: 16,
 		marginHorizontal: 15,
-		color: '#444'
+		color: '#444',
 	},
 	hCell: {
 		fontSize: 18,
 		fontFamily: 'UbuntuBold',
-		marginHorizontal: 15
+		marginHorizontal: 15,
 	},
 	grayBg: {
-		backgroundColor: '#f6f6f6'
-	}
+		backgroundColor: '#f6f6f6',
+	},
 });
 
 export default TruthTable;

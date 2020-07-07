@@ -18,8 +18,8 @@ const InfoScreen = ({ navigation }) => {
 				style={{
 					width: 'auto',
 					position: 'absolute',
-					top: 35,
-					left: 10
+					top: 55,
+					left: 20
 				}}
 				onPress={() => {
 					navigation.goBack();
@@ -34,7 +34,7 @@ const InfoScreen = ({ navigation }) => {
 					flexDirection: 'row',
 					justifyContent: 'center',
 					alignItems: 'center',
-					marginTop: 50
+					marginTop: 70
 				}}></View>
 			<View style={styles.title}>
 				<Text style={styles.titleText}>Symbols</Text>

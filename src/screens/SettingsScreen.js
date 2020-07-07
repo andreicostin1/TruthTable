@@ -81,9 +81,9 @@ const SettingsScreen = ({ navigation }) => {
 			start={{ x: 1, y: 0 }}
 			end={{ x: 0, y: 1 }}
 			style={{ flex: 1 }}>
-			<View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginTop: 35 }}>
+			<View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginTop: 55 }}>
 				<TouchableOpacity
-					style={{ position: 'absolute', left: 5, width: 'auto' }}
+					style={{ position: 'absolute', left: 20, width: 'auto' }}
 					onPress={() => {
 						navigation.goBack();
 					}}>
