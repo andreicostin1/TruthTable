@@ -90,11 +90,11 @@ const HomeScreen = ({ navigation }) => {
 				<View style={styles.input}>
 					<View style={styles.bubble2}></View>
 					<View style={styles.accentWrapper}>
-						<View style={styles.accent}></View>
+						<View style={{...styles.accent, backgroundColor:gradEnd}}></View>
 						<TextInput
 							style={styles.entry}
 							placeholder='Input formula'
-							placeholderTextColor='#7777C8'
+							placeholderTextColor={gradEnd}
 							autoCorrect={false}
 							value={entry}
 							multiline={true}
@@ -353,7 +353,7 @@ const HomeScreen = ({ navigation }) => {
 						}
 					}}>
 					<View style={styles.entryButton}>
-						<Text style={styles.entryText}> Generate </Text>
+						<Text style={{...styles.entryText, color: gradEnd}}> Generate </Text>
 					</View>
 				</TouchableOpacity>
 			</View>
@@ -423,7 +423,6 @@ const styles = StyleSheet.create({
 		left: -60,
 		width: 68,
 		height: 68,
-		backgroundColor: '#7159de',
 		borderRadius: 34,
 		zIndex: 99
 	},
@@ -461,7 +460,6 @@ const styles = StyleSheet.create({
 	},
 	entryText: {
 		fontSize: 19,
-		color: '#685DC4',
 		alignSelf: 'center',
 		fontFamily: 'Ubuntu'
 	},
