@@ -14,21 +14,12 @@ import { ScrollView } from 'react-native-gesture-handler';
 
 const grads = [
 		['#5831F0', '#92CBF6'],
-		['#20002c', '#cbb4d4'],
 		['#34e89e', '#0f3443'],
-		['#6190E8', '#A7BFE8'],
-		['#200122', '#6f0000'],
 		['#0575E6', '#021B79'],
-		['#4568DC', '#B06AB3'],
-		['#43C6AC', '#191654'],
 		['#43C6AC', '#F8FFAE'],
-		['#F0F2F0', '#000C40'],
-		['#E8CBC0', '#636FA4'],
-		['#DCE35B', '#45B649'],
 		['#c0c0aa', '#1cefff'],
 		['#9CECFB', '#0052D4'],
 		['#3494E6', '#EC6EAD'],
-		['#67B26F', '#4ca2cd'],
 		['#ee0979', '#ff6a00'],
 		['#00c3ff', '#ffff1c']
 	];
@@ -132,7 +123,7 @@ const SettingsScreen = ({ navigation }) => {
 						source={require('../../assets/back.png')}
 					/>
 				</TouchableOpacity>
-				<Text style={styles.headerText}>Settings: Choose a Background</Text>
+				<Text style={styles.headerText}>Settings</Text>
 			</View>
 			<ScrollView style={{ marginTop: 10, paddingHorizontal: 10 }}>
 				{displayGrads()}
