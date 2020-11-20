@@ -53,23 +53,63 @@ const SettingsScreen = ({ navigation }) => {
 
 	function displayGrads() {
 		const list = [];
-		for (const grad of grads) {
+		for (let i = 0; i < grads.length; i+=3) {
+			const one = grads[i]
+			const two = grads[i+1]
+			const three = grads[i+2]
 			list.push(
-				<TouchableOpacity
-					key={Math.random()}
-					style={styles.gradTouch}
-					onPress={() => {
-						setGradS(grad[0]);
-						setGradE(grad[1]);
-						storeGradient(grad[0], grad[1]);
-						getGrad();
-					}}>
-					<LinearGradient
-						colors={[grad[0], grad[1]]}
-						start={{ x: 1, y: 0 }}
-						end={{ x: 0, y: 1 }}
-						style={{ flex: 1 }}></LinearGradient>
-				</TouchableOpacity>
+				<View style={styles.inputRowView} key={Math.random()}>
+					<TouchableOpacity
+						key={Math.random()}
+						style={styles.gradTouch}
+						onPress={() => {
+							setGradS(one[0]);
+							setGradE(one[1]);
+							storeGradient(one[0], one[1]);
+							getGrad();
+						}}>
+						<LinearGradient
+							colors={[one[0], one[1]]}
+							start={{ x: 1, y: 0 }}
+							end={{ x: 0, y: 1 }}
+							style={{ flex: 1, borderRadius: 50 }}>
+						</LinearGradient>
+					</TouchableOpacity>
+
+					<TouchableOpacity
+						key={Math.random()}
+						style={styles.gradTouch}
+						onPress={() => {
+							setGradS(two[0]);
+							setGradE(two[1]);
+							storeGradient(two[0], two[1]);
+							getGrad();
+						}}>
+						<LinearGradient
+							colors={[two[0], two[1]]}
+							start={{ x: 1, y: 0 }}
+							end={{ x: 0, y: 1 }}
+							style={{ flex: 1, borderRadius: 50 }}>
+						</LinearGradient>
+					</TouchableOpacity>
+
+					<TouchableOpacity
+						key={Math.random()}
+						style={styles.gradTouch}
+						onPress={() => {
+							setGradS(three[0]);
+							setGradE(three[1]);
+							storeGradient(three[0], three[1]);
+							getGrad();
+						}}>
+						<LinearGradient
+							colors={[three[0], three[1]]}
+							start={{ x: 1, y: 0 }}
+							end={{ x: 0, y: 1 }}
+							style={{ flex: 1, borderRadius: 50 }}>
+						</LinearGradient>
+					</TouchableOpacity>
+				</View>
 			);
 		}
 		return list;
@@ -104,9 +144,11 @@ const SettingsScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
 	gradTouch: {
 		height: 100,
+		width: 100,
 		marginTop: 30,
-		borderColor: 'black',
-		borderWidth: 1
+		borderRadius: 50,
+		borderColor: 'white',
+		borderWidth: 2
 	},
 	backBut: {
 		height: 30,
@@ -116,7 +158,12 @@ const styles = StyleSheet.create({
 		fontSize: 18,
 		color: '#fff',
 		fontFamily: 'UbuntuBold'
-	}
+	},
+	inputRowView: {
+		flexDirection: 'row',
+		justifyContent: 'space-between',
+		paddingHorizontal: 25
+	},
 });
 
 export default SettingsScreen;
