@@ -19,7 +19,7 @@ const InfoScreen = ({ navigation }) => {
 					width: 'auto',
 					position: 'absolute',
 					top: 55,
-					left: 20
+					left: 20,
 				}}
 				onPress={() => {
 					navigation.goBack();
@@ -34,7 +34,7 @@ const InfoScreen = ({ navigation }) => {
 					flexDirection: 'row',
 					justifyContent: 'center',
 					alignItems: 'center',
-					marginTop: 70
+					marginTop: 70,
 				}}></View>
 			<View style={styles.title}>
 				<Text style={styles.titleText}>Symbols</Text>
@@ -69,7 +69,7 @@ const InfoScreen = ({ navigation }) => {
 						navigation.navigate('TruthTable', {
 							truthTable: new TruthTableGenerator('¬(A∧B)≡¬A∨¬B'),
 							gradStart,
-							gradEnd
+							gradEnd,
 						});
 					}}>
 					<View style={{ ...styles.border, flex: 1, marginBottom: 5 }}>
@@ -88,25 +88,25 @@ const InfoScreen = ({ navigation }) => {
 
 const styles = StyleSheet.create({
 	title: {
-		marginTop: 30
+		marginTop: 30,
 	},
 	scrollView: {
 		flex: 1,
-		width: '100%'
+		width: '100%',
 	},
 	titleText: {
 		fontSize: 22,
-		color: 'white'
+		color: 'white',
 	},
 	text: {
-		fontSize: 18
+		fontSize: 18,
 	},
 	backBut: {
 		height: 30,
-		width: 30
+		width: 30,
 	},
 	borderTouch: {
-		flexDirection: 'row'
+		flexDirection: 'row',
 	},
 	border: {
 		borderRadius: 3,
@@ -120,8 +120,8 @@ const styles = StyleSheet.create({
 		shadowRadius: 5,
 		shadowOffset: { width: 0, height: 3 },
 		zIndex: 1,
-		elevation: 4
-	}
+		elevation: 4,
+	},
 });
 
 export default InfoScreen;

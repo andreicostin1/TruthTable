@@ -12,7 +12,7 @@ import {
 	Alert,
 	Platform,
 	Image,
-	AsyncStorage
+	AsyncStorage,
 } from 'react-native';
 
 const HomeScreen = ({ navigation }) => {
@@ -20,15 +20,16 @@ const HomeScreen = ({ navigation }) => {
 	const [fontLoaded, setFontLoaded] = useState(false);
 	const [gradStart, setGradStart] = useState('#5831F0');
 	const [gradEnd, setGradEnd] = useState('#92CBF6');
-	{
-		getGrad();
-	}
+
+	const symbols = ['A', 'B', 'C', 'D', 'X', 'Y', 'Z', 'W'];
+
+	getGrad();
 
 	useEffect(() => {
 		if (fontLoaded) return;
 		Font.loadAsync({
 			Ubuntu: require('../../assets/fonts/Ubuntu-Regular.ttf'),
-			UbuntuBold: require('../../assets/fonts/Ubuntu-Medium.ttf')
+			UbuntuBold: require('../../assets/fonts/Ubuntu-Medium.ttf'),
 		}).then(() => {
 			setFontLoaded(true);
 		});
@@ -44,8 +45,26 @@ const HomeScreen = ({ navigation }) => {
 				setGradEnd(e);
 			}
 		} catch (error) {
-			Alert('Error')
+			Alert('Error');
 		}
+	}
+
+	function getSymbols(x,y) {
+		const list = [];
+		for (let i = x; i < y; i++) {
+			list.push(
+				<TouchableOpacity
+					style={styles.inputTouch}
+					onPress={() => {
+						setEntry(entry + symbols[i]);
+					}}>
+					<View style={styles.inputLettersView}>
+						<Text style={styles.inputText}>{symbols[i]}</Text>
+					</View>
+				</TouchableOpacity>
+			);
+		}
+		return list
 	}
 
 	if (!fontLoaded) return null;
@@ -55,16 +74,20 @@ const HomeScreen = ({ navigation }) => {
 			colors={[gradStart, gradEnd]}
 			start={{ x: 1, y: 0 }}
 			end={{ x: 0, y: 1 }}
-			style={{ flex: 1, alignItems: 'center', justifyContent: 'center', paddingBottom: 20 }}>
+			style={{
+				flex: 1,
+				alignItems: 'center',
+				justifyContent: 'center',
+				paddingBottom: 20,
+			}}>
 			<View style={styles.infoView}>
-				
 				<Text style={styles.header}>Truth Table Generator</Text>
 				<TouchableOpacity
 					style={styles.infoButTouch}
 					onPress={() => {
 						navigation.navigate('Info', {
 							gradStart,
-							gradEnd
+							gradEnd,
 						});
 					}}>
 					<Image
@@ -90,7 +113,7 @@ const HomeScreen = ({ navigation }) => {
 				<View style={styles.input}>
 					<View style={styles.bubble2}></View>
 					<View style={styles.accentWrapper}>
-						<View style={{...styles.accent, backgroundColor:gradEnd}}></View>
+						<View style={{ ...styles.accent, backgroundColor: gradEnd }}></View>
 						<TextInput
 							style={styles.entry}
 							placeholder='Input formula'
@@ -105,87 +128,17 @@ const HomeScreen = ({ navigation }) => {
 
 				<View style={styles.inputGrid}>
 					<View style={styles.inputRowView}>
-						<TouchableOpacity
-							style={styles.inputTouch}
-							onPress={() => {
-								setEntry(entry + 'A');
-							}}>
-							<View style={styles.inputLettersView}>
-								<Text style={styles.inputText}>A</Text>
-							</View>
-						</TouchableOpacity>
-						<TouchableOpacity
-							style={styles.inputTouch}
-							onPress={() => {
-								setEntry(entry + 'B');
-							}}>
-							<View style={styles.inputLettersView}>
-								<Text style={styles.inputText}>B</Text>
-							</View>
-						</TouchableOpacity>
-						<TouchableOpacity
-							style={styles.inputTouch}
-							onPress={() => {
-								setEntry(entry + 'C');
-							}}>
-							<View style={styles.inputLettersView}>
-								<Text style={styles.inputText}>C</Text>
-							</View>
-						</TouchableOpacity>
-						<TouchableOpacity
-							style={styles.inputTouch}
-							onPress={() => {
-								setEntry(entry + 'D');
-							}}>
-							<View style={styles.inputLettersView}>
-								<Text style={styles.inputText}>D</Text>
-							</View>
-						</TouchableOpacity>
+						{getSymbols(0, 4)}
 					</View>
 					<View style={styles.inputRowView}>
-						<TouchableOpacity
-							style={styles.inputTouch}
-							onPress={() => {
-								setEntry(entry + 'X');
-							}}>
-							<View style={styles.inputLettersView}>
-								<Text style={styles.inputText}>X</Text>
-							</View>
-						</TouchableOpacity>
-						<TouchableOpacity
-							style={styles.inputTouch}
-							onPress={() => {
-								setEntry(entry + 'Y');
-							}}>
-							<View style={styles.inputLettersView}>
-								<Text style={styles.inputText}>Y</Text>
-							</View>
-						</TouchableOpacity>
-						<TouchableOpacity
-							style={styles.inputTouch}
-							onPress={() => {
-								setEntry(entry + 'Z');
-							}}>
-							<View style={styles.inputLettersView}>
-								<Text style={styles.inputText}>Z</Text>
-							</View>
-						</TouchableOpacity>
-						<TouchableOpacity
-							style={styles.inputTouch}
-							onPress={() => {
-								setEntry(entry + 'W');
-							}}>
-							<View style={styles.inputLettersView}>
-								<Text style={styles.inputText}>W</Text>
-							</View>
-						</TouchableOpacity>
+						{getSymbols(4, 8)}
 					</View>
 					<View
 						style={{
 							...styles.inputRowView,
 							marginVertical: 7,
 							justifyContent: 'space-around',
-							height: 30
+							height: 30,
 						}}>
 						<TouchableOpacity
 							style={{ ...styles.tf }}
@@ -196,7 +149,7 @@ const HomeScreen = ({ navigation }) => {
 								style={{
 									justifyContent: 'center',
 									alignItems: 'center',
-									flex: 1
+									flex: 1,
 								}}>
 								<Text style={styles.tfText}>true</Text>
 							</View>
@@ -219,7 +172,7 @@ const HomeScreen = ({ navigation }) => {
 								style={{
 									justifyContent: 'center',
 									alignItems: 'center',
-									flex: 1
+									flex: 1,
 								}}>
 								<Text style={styles.tfText}>false</Text>
 							</View>
@@ -333,7 +286,7 @@ const HomeScreen = ({ navigation }) => {
 								navigation.navigate('TruthTable', {
 									truthTable: new TruthTableGenerator(formula),
 									gradStart,
-									gradEnd
+									gradEnd,
 								});
 							} catch (e) {
 								Alert.alert(
@@ -353,7 +306,10 @@ const HomeScreen = ({ navigation }) => {
 						}
 					}}>
 					<View style={styles.entryButton}>
-						<Text style={{...styles.entryText, color: gradEnd}}> Generate </Text>
+						<Text style={{ ...styles.entryText, color: gradEnd }}>
+							{' '}
+							Generate{' '}
+						</Text>
 					</View>
 				</TouchableOpacity>
 			</View>
@@ -366,13 +322,13 @@ const styles = StyleSheet.create({
 		alignSelf: 'center',
 		width: '100%',
 		maxWidth: 400,
-		paddingHorizontal: 20
+		paddingHorizontal: 20,
 	},
 	header: {
 		color: 'white',
 		fontSize: 24,
 		marginRight: 10,
-		fontFamily: 'UbuntuBold'
+		fontFamily: 'UbuntuBold',
 	},
 	bubble1: {
 		position: 'absolute',
@@ -382,7 +338,7 @@ const styles = StyleSheet.create({
 		height: 210,
 		borderRadius: 105,
 		backgroundColor: 'rgba(255,255,255,0.1)',
-		zIndex: 0
+		zIndex: 0,
 	},
 	bubble2: {
 		position: 'absolute',
@@ -392,7 +348,7 @@ const styles = StyleSheet.create({
 		height: 110,
 		borderRadius: 55,
 		backgroundColor: 'rgba(255,255,255,0.08)',
-		zIndex: 0
+		zIndex: 0,
 	},
 	bubble3: {
 		position: 'absolute',
@@ -402,7 +358,7 @@ const styles = StyleSheet.create({
 		height: 60,
 		borderRadius: 39,
 		backgroundColor: 'rgba(255,255,255,0.06)',
-		zIndex: 0
+		zIndex: 0,
 	},
 	input: {
 		backgroundColor: 'white',
@@ -412,10 +368,10 @@ const styles = StyleSheet.create({
 		shadowOffset: { width: 0, height: 3 },
 		zIndex: 10,
 		elevation: 4,
-		borderRadius: 5
+		borderRadius: 5,
 	},
 	accentWrapper: {
-		overflow: 'hidden'
+		overflow: 'hidden',
 	},
 	accent: {
 		position: 'absolute',
@@ -424,7 +380,7 @@ const styles = StyleSheet.create({
 		width: 68,
 		height: 68,
 		borderRadius: 34,
-		zIndex: 99
+		zIndex: 99,
 	},
 	entry: {
 		color: '#393939',
@@ -434,7 +390,7 @@ const styles = StyleSheet.create({
 		borderRadius: 5,
 		backgroundColor: 'white',
 		fontSize: 19,
-		fontFamily: 'Ubuntu'
+		fontFamily: 'Ubuntu',
 	},
 	inputGrid: {
 		backgroundColor: 'white',
@@ -444,7 +400,7 @@ const styles = StyleSheet.create({
 		marginBottom: 30,
 		marginHorizontal: 11,
 		paddingTop: 10,
-		paddingBottom: 10
+		paddingBottom: 10,
 	},
 	entryButton: {
 		alignSelf: 'center',
@@ -456,17 +412,17 @@ const styles = StyleSheet.create({
 		shadowOpacity: 0.12,
 		shadowRadius: 5,
 		shadowOffset: { width: 0, height: 5 },
-		elevation: 3
+		elevation: 3,
 	},
 	entryText: {
 		fontSize: 19,
 		alignSelf: 'center',
-		fontFamily: 'Ubuntu'
+		fontFamily: 'Ubuntu',
 	},
 	inputRowView: {
 		flexDirection: 'row',
 		justifyContent: 'space-between',
-		paddingHorizontal: 25
+		paddingHorizontal: 25,
 	},
 	inputLettersView: {
 		backgroundColor: '#F0F3F6',
@@ -475,20 +431,20 @@ const styles = StyleSheet.create({
 		width: 50,
 		marginVertical: 4,
 		alignItems: 'center',
-		justifyContent: 'center'
+		justifyContent: 'center',
 	},
 	inputText: {
 		color: '#393939',
 		fontSize: 16,
-		fontFamily: 'Ubuntu'
+		fontFamily: 'Ubuntu',
 	},
 	inputSymbols: {
 		color: '#393939',
-		fontSize: 16
+		fontSize: 16,
 	},
 	inputEquiv: {
 		color: '#393939',
-		fontSize: 16
+		fontSize: 16,
 	},
 	inputSymbolsView: {
 		backgroundColor: 'white',
@@ -499,27 +455,27 @@ const styles = StyleSheet.create({
 		width: 50,
 		marginVertical: 4,
 		alignItems: 'center',
-		justifyContent: 'center'
+		justifyContent: 'center',
 	},
 	andOr: {
-		fontSize: ios() ? 20 : 16
+		fontSize: ios() ? 20 : 16,
 	},
 	del: {
 		color: 'red',
 		fontSize: 16,
-		fontFamily: 'Ubuntu'
+		fontFamily: 'Ubuntu',
 	},
 	tf: {
 		flex: 2,
 		backgroundColor: 'white',
 		borderColor: '#DADDE4',
 		borderWidth: 1,
-		borderRadius: 8
+		borderRadius: 8,
 	},
 	tfText: {
 		color: '#393939',
 		fontSize: 16,
-		fontFamily: 'Ubuntu'
+		fontFamily: 'Ubuntu',
 	},
 	xor: {
 		flex: 1,
@@ -529,23 +485,23 @@ const styles = StyleSheet.create({
 		borderColor: '#DADDE4',
 		borderWidth: 1,
 		borderRadius: 8,
-		marginHorizontal: 10
+		marginHorizontal: 10,
 	},
 	xorText: {
 		color: '#393939',
-		fontSize: 20
+		fontSize: 20,
 	},
 	infoView: {
 		flexDirection: 'row',
-		marginBottom: 60
+		marginBottom: 60,
 	},
 	infoButTouch: {
-		alignSelf: 'flex-end'
+		alignSelf: 'flex-end',
 	},
 	infoBut: {
 		height: 30,
-		width: 30
-	}
+		width: 30,
+	},
 });
 
 function ios() {
