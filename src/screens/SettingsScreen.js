@@ -48,7 +48,7 @@ const SettingsScreen = ({ navigation }) => {
 
 	async function storeSymbols(symbolInput) {
 		try {
-			if (symb != null) {
+			if (symbolInput != null) {
 				await AsyncStorage.setItem('symbols', symbolInput);
 			}
 		} catch (error) {
