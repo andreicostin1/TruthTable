@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { LinearGradient } from 'expo-linear-gradient';
+import Dialog from 'react-native-dialog';
 
 import {
 	TextInput,
@@ -30,6 +31,9 @@ const SettingsScreen = ({ navigation }) => {
 	const [gradS, setGradS] = useState(navigation.state.params.gradStart);
 	const [gradE, setGradE] = useState(navigation.state.params.gradEnd);
 	const [symbols, setSymbols] = useState(navigation.state.params.symbols);
+	const getSymbolsFromMem = navigation.state.params.getSymbolsFromMem;
+
+	let symbs = symbols;
 
 	async function storeGradient(s, e) {
 		try {
@@ -42,10 +46,10 @@ const SettingsScreen = ({ navigation }) => {
 		}
 	}
 
-	async function storeSymbols(symb) {
+	async function storeSymbols(symbolInput) {
 		try {
 			if (symb != null) {
-				await AsyncStorage.setItem('symbols', symb);
+				await AsyncStorage.setItem('symbols', symbolInput);
 			}
 		} catch (error) {
 			Alert('Error');
@@ -113,6 +117,26 @@ const SettingsScreen = ({ navigation }) => {
 		return list;
 	}
 
+	function displaySymbols(x, y) {
+		const list = [];
+		for (let i = x; i < y; i++) {
+			list.push(
+				<TextInput
+					key={Math.random()}
+					placeholder={symbs[i]}
+					style={styles.inputLettersView}
+					onChangeText={(text) => {
+						symbs[i] = text;
+						setSymbols(symbs);
+						storeSymbols(symbols);
+						getSymbolsFromMem();
+					}}
+				/>
+			);
+		}
+		return list;
+	}
+
 	return (
 		<LinearGradient
 			colors={[gradS, gradE]}
@@ -140,8 +164,9 @@ const SettingsScreen = ({ navigation }) => {
 				<Text style={styles.headerText}>Settings</Text>
 			</View>
 
-			<View>
-				
+			<View style={styles.customVar}>
+				<View style={styles.inputRowView}>{displaySymbols(0, 4)}</View>
+				<View style={styles.inputRowView}>{displaySymbols(4, 8)}</View>
 			</View>
 
 			<ScrollView style={{ marginTop: 10, paddingHorizontal: 10 }}>
@@ -173,6 +198,23 @@ const styles = StyleSheet.create({
 		flexDirection: 'row',
 		justifyContent: 'space-between',
 		paddingHorizontal: 25,
+	},
+	inputText: {
+		color: '#393939',
+		fontSize: 16,
+		fontFamily: 'Ubuntu',
+	},
+	inputLettersView: {
+		backgroundColor: '#F0F3F6',
+		borderRadius: 10,
+		height: 50,
+		width: 50,
+		marginVertical: 4,
+		textAlign: 'center',
+	},
+	customVar: {
+		paddingVertical: 30,
+		paddingHorizontal: 20,
 	},
 });
 

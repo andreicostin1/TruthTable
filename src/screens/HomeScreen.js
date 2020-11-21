@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { LinearGradient } from 'expo-linear-gradient';
 import TruthTableGenerator from '../Generator/Generator';
 import * as Font from 'expo-font';
+import { NavigationEvents } from 'react-navigation';
+
 
 import {
 	Text,
@@ -23,7 +25,6 @@ const HomeScreen = ({ navigation }) => {
 	const [symbols, setSymbols] = useState(['A', 'B', 'C', 'D', 'X', 'Y', 'Z', 'W'])
 
 	getGrad();
-	getSymbols();
 
 	useEffect(() => {
 		if (fontLoaded) return;
@@ -49,7 +50,7 @@ const HomeScreen = ({ navigation }) => {
 		}
 	}
 
-	async function getSymbols() {
+	async function getSymbolsFromMem() {
 		try {
 			const s = await AsyncStorage.getItem('symbols');
 
@@ -67,7 +68,6 @@ const HomeScreen = ({ navigation }) => {
 			list.push(
 				<TouchableOpacity
 					key={Math.random()}
-					style={styles.inputTouch}
 					onPress={() => {
 						setEntry(entry + symbols[i]);
 					}}>
@@ -93,6 +93,7 @@ const HomeScreen = ({ navigation }) => {
 				justifyContent: 'center',
 				paddingBottom: 20,
 			}}>
+			
 			<View style={styles.infoView}>
 				<Text style={styles.header}>Truth Table Generator</Text>
 				<TouchableOpacity
@@ -111,7 +112,7 @@ const HomeScreen = ({ navigation }) => {
 				<TouchableOpacity
 					style={{ alignSelf: 'flex-end', marginLeft: 10 }}
 					onPress={() => {
-						navigation.navigate('Settings', { getGrad, gradStart, gradEnd, symbols, getSymbols });
+						navigation.navigate('Settings', { getGrad, gradStart, gradEnd, symbols, getSymbolsFromMem });
 					}}>
 					<Image
 						style={{ height: 30, width: 30 }}
@@ -193,7 +194,6 @@ const HomeScreen = ({ navigation }) => {
 					</View>
 					<View style={{ ...styles.inputRowView }}>
 						<TouchableOpacity
-							style={styles.inputTouch}
 							onPress={() => {
 								setEntry(entry + '∧');
 							}}>
@@ -204,7 +204,6 @@ const HomeScreen = ({ navigation }) => {
 							</View>
 						</TouchableOpacity>
 						<TouchableOpacity
-							style={styles.inputTouch}
 							onPress={() => {
 								setEntry(entry + '∨');
 							}}>
@@ -215,7 +214,6 @@ const HomeScreen = ({ navigation }) => {
 							</View>
 						</TouchableOpacity>
 						<TouchableOpacity
-							style={styles.inputTouch}
 							onPress={() => {
 								setEntry(entry + '(');
 							}}>
@@ -224,7 +222,6 @@ const HomeScreen = ({ navigation }) => {
 							</View>
 						</TouchableOpacity>
 						<TouchableOpacity
-							style={styles.inputTouch}
 							onPress={() => {
 								setEntry(entry + ')');
 							}}>
@@ -235,7 +232,6 @@ const HomeScreen = ({ navigation }) => {
 					</View>
 					<View style={styles.inputRowView}>
 						<TouchableOpacity
-							style={styles.inputTouch}
 							onPress={() => {
 								setEntry(entry + '¬');
 							}}>
@@ -244,7 +240,6 @@ const HomeScreen = ({ navigation }) => {
 							</View>
 						</TouchableOpacity>
 						<TouchableOpacity
-							style={styles.inputTouch}
 							onPress={() => {
 								setEntry(entry + '⇒');
 							}}>
@@ -253,7 +248,6 @@ const HomeScreen = ({ navigation }) => {
 							</View>
 						</TouchableOpacity>
 						<TouchableOpacity
-							style={styles.inputTouch}
 							onPress={() => {
 								setEntry(entry + '≡');
 							}}>
@@ -262,7 +256,6 @@ const HomeScreen = ({ navigation }) => {
 							</View>
 						</TouchableOpacity>
 						<TouchableOpacity
-							style={styles.inputTouch}
 							onPress={() => {
 								if (entry.length != 0 || entry != '') {
 									if (
