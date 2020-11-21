@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { LinearGradient } from 'expo-linear-gradient';
 
 import {
+	TextInput,
 	StyleSheet,
 	TouchableOpacity,
 	Alert,
@@ -28,12 +29,23 @@ const SettingsScreen = ({ navigation }) => {
 	const getGrad = navigation.state.params.getGrad;
 	const [gradS, setGradS] = useState(navigation.state.params.gradStart);
 	const [gradE, setGradE] = useState(navigation.state.params.gradEnd);
+	const [symbols, setSymbols] = useState(navigation.state.params.symbols);
 
 	async function storeGradient(s, e) {
 		try {
 			if (s != null && e != null) {
 				await AsyncStorage.setItem('gradStart', s);
 				await AsyncStorage.setItem('gradEnd', e);
+			}
+		} catch (error) {
+			Alert('Error');
+		}
+	}
+
+	async function storeSymbols(symb) {
+		try {
+			if (symb != null) {
+				await AsyncStorage.setItem('symbols', symb);
 			}
 		} catch (error) {
 			Alert('Error');
@@ -107,9 +119,7 @@ const SettingsScreen = ({ navigation }) => {
 			start={{ x: 1, y: 0 }}
 			end={{ x: 0, y: 1 }}
 			style={{ flex: 1 }}>
-			<View>
-				
-			</View>
+			<View></View>
 			<View
 				style={{
 					flexDirection: 'row',
@@ -129,6 +139,11 @@ const SettingsScreen = ({ navigation }) => {
 				</TouchableOpacity>
 				<Text style={styles.headerText}>Settings</Text>
 			</View>
+
+			<View>
+				
+			</View>
+
 			<ScrollView style={{ marginTop: 10, paddingHorizontal: 10 }}>
 				{displayGrads()}
 			</ScrollView>

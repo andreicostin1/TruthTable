@@ -20,10 +20,10 @@ const HomeScreen = ({ navigation }) => {
 	const [fontLoaded, setFontLoaded] = useState(false);
 	const [gradStart, setGradStart] = useState('#5831F0');
 	const [gradEnd, setGradEnd] = useState('#92CBF6');
-
-	const symbols = ['A', 'B', 'C', 'D', 'X', 'Y', 'Z', 'W'];
+	const [symbols, setSymbols] = useState(['A', 'B', 'C', 'D', 'X', 'Y', 'Z', 'W'])
 
 	getGrad();
+	getSymbols();
 
 	useEffect(() => {
 		if (fontLoaded) return;
@@ -49,11 +49,24 @@ const HomeScreen = ({ navigation }) => {
 		}
 	}
 
+	async function getSymbols() {
+		try {
+			const s = await AsyncStorage.getItem('symbols');
+
+			if (s !== null) {
+				setSymbols(JSON.parse(s));
+			}
+		} catch (error) {
+			Alert('Error');
+		}
+	}
+
 	function getSymbols(x,y) {
 		const list = [];
 		for (let i = x; i < y; i++) {
 			list.push(
 				<TouchableOpacity
+					key={Math.random()}
 					style={styles.inputTouch}
 					onPress={() => {
 						setEntry(entry + symbols[i]);
@@ -98,7 +111,7 @@ const HomeScreen = ({ navigation }) => {
 				<TouchableOpacity
 					style={{ alignSelf: 'flex-end', marginLeft: 10 }}
 					onPress={() => {
-						navigation.navigate('Settings', { getGrad, gradStart, gradEnd });
+						navigation.navigate('Settings', { getGrad, gradStart, gradEnd, symbols, getSymbols });
 					}}>
 					<Image
 						style={{ height: 30, width: 30 }}
