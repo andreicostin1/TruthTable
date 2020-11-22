@@ -20,8 +20,8 @@ import {
 const HomeScreen = ({ navigation }) => {
 	const [entry, setEntry] = useState('');
 	const [fontLoaded, setFontLoaded] = useState(false);
-	const [gradStart, setGradStart] = useState('#5831F0');
-	const [gradEnd, setGradEnd] = useState('#92CBF6');
+	const [gradStart, setGradStart] = useState('#9CECFB');
+	const [gradEnd, setGradEnd] = useState('#0052D4');
 	const [symbols, setSymbols] = useState(['A', 'B', 'C', 'D', 'X', 'Y', 'Z', 'W'])
 
 	getGrad();

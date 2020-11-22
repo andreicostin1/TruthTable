@@ -14,12 +14,12 @@ import {
 import { ScrollView } from 'react-native-gesture-handler';
 
 const grads = [
-	['#5831F0', '#92CBF6'],
-	['#34e89e', '#0f3443'],
+	['#9CECFB', '#0052D4'],
 	['#0575E6', '#021B79'],
+	['#5831F0', '#92CBF6'],
 	['#43C6AC', '#F8FFAE'],
 	['#c0c0aa', '#1cefff'],
-	['#9CECFB', '#0052D4'],
+	['#34e89e', '#0f3443'],
 	['#3494E6', '#EC6EAD'],
 	['#ee0979', '#ff6a00'],
 	['#00c3ff', '#ffff1c'],
@@ -160,13 +160,16 @@ const SettingsScreen = ({ navigation }) => {
 				</TouchableOpacity>
 				<Text style={styles.headerText}>Settings</Text>
 			</View>
+			<ScrollView style={{ marginTop:5, paddingHorizontal: 10 }}>
+				<View style={styles.customVar}>
+					<Text style={{ ...styles.var }}>Variable Editor</Text>
 
-			<View style={styles.customVar}>
-				<View style={styles.inputRowView}>{displaySymbols(0, 4)}</View>
-				<View style={styles.inputRowView}>{displaySymbols(4, 8)}</View>
-			</View>
+					<View style={styles.inputRowView}>{displaySymbols(0, 4)}</View>
+					<View style={styles.inputRowView}>{displaySymbols(4, 8)}</View>
+				</View>
 
-			<ScrollView style={{ marginTop: 10, paddingHorizontal: 10 }}>
+				<Text style={{ ...styles.var, paddingBottom: 20 }}>Theme</Text>
+
 				{displayGrads()}
 			</ScrollView>
 		</LinearGradient>
@@ -177,7 +180,7 @@ const styles = StyleSheet.create({
 	gradTouch: {
 		height: 100,
 		width: 100,
-		marginTop: 30,
+		marginBottom: 30,
 		borderRadius: 50,
 		borderColor: 'white',
 		borderWidth: 2,
@@ -212,6 +215,13 @@ const styles = StyleSheet.create({
 	customVar: {
 		paddingVertical: 30,
 		paddingHorizontal: 20,
+	},
+	var: {
+		textAlign: 'center',
+		fontSize: 18,
+		fontFamily: 'UbuntuBold',
+		color: 'white',
+		paddingBottom: 20,
 	},
 });
 
