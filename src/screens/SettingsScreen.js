@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { LinearGradient } from 'expo-linear-gradient';
-import Dialog from 'react-native-dialog';
 
 import {
 	TextInput,
@@ -46,11 +45,9 @@ const SettingsScreen = ({ navigation }) => {
 		}
 	}
 
-	async function storeSymbols(symbolInput) {
+	async function storeSymbols() {
 		try {
-			if (symbolInput != null) {
-				await AsyncStorage.setItem('symbols', symbolInput);
-			}
+			await AsyncStorage.setItem('symbols', JSON.stringify(symbols));
 		} catch (error) {
 			Alert('Error');
 		}
@@ -125,6 +122,7 @@ const SettingsScreen = ({ navigation }) => {
 					key={Math.random()}
 					placeholder={symbs[i]}
 					style={styles.inputLettersView}
+					maxLength={1}
 					onChangeText={(text) => {
 						symbs[i] = text;
 						setSymbols(symbs);
@@ -143,7 +141,6 @@ const SettingsScreen = ({ navigation }) => {
 			start={{ x: 1, y: 0 }}
 			end={{ x: 0, y: 1 }}
 			style={{ flex: 1 }}>
-			<View></View>
 			<View
 				style={{
 					flexDirection: 'row',
