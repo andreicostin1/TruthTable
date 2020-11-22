@@ -124,10 +124,16 @@ const SettingsScreen = ({ navigation }) => {
 					style={styles.inputLettersView}
 					maxLength={1}
 					onChangeText={(text) => {
-						symbs[i] = text;
-						setSymbols(symbs);
-						storeSymbols(symbols);
-						getSymbolsFromMem();
+						if ((text >= 'a' && text <= 'z') || (text >= 'A' && text <= 'Z') || text == '') {
+							symbs[i] = text;
+							setSymbols(symbs);
+							storeSymbols(symbols);
+							getSymbolsFromMem();
+						} else {
+							Alert.alert(
+								'Invalid character, please enter only letters',
+							);
+						}
 					}}
 				/>
 			);
@@ -160,7 +166,7 @@ const SettingsScreen = ({ navigation }) => {
 				</TouchableOpacity>
 				<Text style={styles.headerText}>Settings</Text>
 			</View>
-			<ScrollView style={{ marginTop:5, paddingHorizontal: 10 }}>
+			<ScrollView style={{ marginTop: 5, paddingHorizontal: 10 }}>
 				<View style={styles.customVar}>
 					<Text style={{ ...styles.var }}>Variable Editor</Text>
 
