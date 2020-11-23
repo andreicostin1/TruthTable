@@ -4,7 +4,6 @@ import TruthTableGenerator from '../Generator/Generator';
 import * as Font from 'expo-font';
 import { NavigationEvents } from 'react-navigation';
 
-
 import {
 	Text,
 	StyleSheet,
@@ -22,9 +21,19 @@ const HomeScreen = ({ navigation }) => {
 	const [fontLoaded, setFontLoaded] = useState(false);
 	const [gradStart, setGradStart] = useState('#9CECFB');
 	const [gradEnd, setGradEnd] = useState('#0052D4');
-	const [symbols, setSymbols] = useState(['A', 'B', 'C', 'D', 'X', 'Y', 'Z', 'W'])
+	const [symbols, setSymbols] = useState([
+		'A',
+		'B',
+		'C',
+		'D',
+		'X',
+		'Y',
+		'Z',
+		'W',
+	]);
 
 	getGrad();
+	getSymbolsFromMem();
 
 	useEffect(() => {
 		if (fontLoaded) return;
@@ -46,23 +55,25 @@ const HomeScreen = ({ navigation }) => {
 				setGradEnd(e);
 			}
 		} catch (error) {
-			Alert('Error');
+			Alert.alert(error.toString());
 		}
 	}
 
 	async function getSymbolsFromMem() {
 		try {
-			const s = await AsyncStorage.getItem('symbols');
-
-			if (s !== null) {
-				setSymbols(JSON.parse(s));
+			const store = await AsyncStorage.getItem('symbols');
+			if (store !== JSON.stringify(symbols)) {
+				let x = JSON.parse(store);
+				setSymbols(x);
+			} else {
+				setSymbols(symbols);
 			}
 		} catch (error) {
-			Alert('Error');
+			Alert.alert(error);
 		}
 	}
 
-	function getSymbols(x,y) {
+	function getSymbols(x, y) {
 		const list = [];
 		for (let i = x; i < y; i++) {
 			list.push(
@@ -77,7 +88,7 @@ const HomeScreen = ({ navigation }) => {
 				</TouchableOpacity>
 			);
 		}
-		return list
+		return list;
 	}
 
 	if (!fontLoaded) return null;
@@ -93,7 +104,6 @@ const HomeScreen = ({ navigation }) => {
 				justifyContent: 'center',
 				paddingBottom: 20,
 			}}>
-			
 			<View style={styles.infoView}>
 				<Text style={styles.header}>Truth Table Generator</Text>
 				<TouchableOpacity
@@ -112,7 +122,13 @@ const HomeScreen = ({ navigation }) => {
 				<TouchableOpacity
 					style={{ alignSelf: 'flex-end', marginLeft: 10 }}
 					onPress={() => {
-						navigation.navigate('Settings', { getGrad, gradStart, gradEnd, symbols, getSymbolsFromMem });
+						navigation.navigate('Settings', {
+							getGrad,
+							gradStart,
+							gradEnd,
+							symbols,
+							getSymbolsFromMem,
+						});
 					}}>
 					<Image
 						style={{ height: 30, width: 30 }}
@@ -141,12 +157,8 @@ const HomeScreen = ({ navigation }) => {
 				</View>
 
 				<View style={styles.inputGrid}>
-					<View style={styles.inputRowView}>
-						{getSymbols(0, 4)}
-					</View>
-					<View style={styles.inputRowView}>
-						{getSymbols(4, 8)}
-					</View>
+					<View style={styles.inputRowView}>{getSymbols(0, 4)}</View>
+					<View style={styles.inputRowView}>{getSymbols(4, 8)}</View>
 					<View
 						style={{
 							...styles.inputRowView,

@@ -49,7 +49,7 @@ const SettingsScreen = ({ navigation }) => {
 		try {
 			await AsyncStorage.setItem('symbols', JSON.stringify(symbols));
 		} catch (error) {
-			Alert('Error');
+			Alert.alert(error.toString());
 		}
 	}
 
@@ -124,15 +124,17 @@ const SettingsScreen = ({ navigation }) => {
 					style={styles.inputLettersView}
 					maxLength={1}
 					onChangeText={(text) => {
-						if ((text >= 'a' && text <= 'z') || (text >= 'A' && text <= 'Z') || text == '') {
+						if (
+							(text >= 'a' && text <= 'z') ||
+							(text >= 'A' && text <= 'Z') ||
+							text == ''
+						) {
 							symbs[i] = text;
 							setSymbols(symbs);
-							storeSymbols(symbols);
+							storeSymbols();
 							getSymbolsFromMem();
 						} else {
-							Alert.alert(
-								'Invalid character, please enter only letters',
-							);
+							Alert.alert('Invalid character, please enter only letters');
 						}
 					}}
 				/>
