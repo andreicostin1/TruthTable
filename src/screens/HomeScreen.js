@@ -32,8 +32,10 @@ const HomeScreen = ({ navigation }) => {
 		'W',
 	]);
 
-	getGrad();
-	getSymbolsFromMem();
+	useEffect(() => {
+		getGrad();
+		getSymbolsFromMem();
+	}, []);
 
 	useEffect(() => {
 		if (fontLoaded) return;
@@ -43,7 +45,7 @@ const HomeScreen = ({ navigation }) => {
 		}).then(() => {
 			setFontLoaded(true);
 		});
-	});
+	}, []);
 
 	async function getGrad() {
 		try {
@@ -62,12 +64,7 @@ const HomeScreen = ({ navigation }) => {
 	async function getSymbolsFromMem() {
 		try {
 			const store = await AsyncStorage.getItem('symbols');
-			if (store !== JSON.stringify(symbols)) {
-				let x = JSON.parse(store);
-				setSymbols(x);
-			} else {
-				setSymbols(symbols);
-			}
+			if (store) setSymbols(JSON.parse(store));
 		} catch (error) {
 			Alert.alert(error);
 		}
