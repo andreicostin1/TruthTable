@@ -7,7 +7,7 @@
       "ios",
       "android"
     ],
-    "version": "1.2.2",
+    "version": "1.0",
     "orientation": "portrait",
     "icon": "./assets/icon-ios.png",
     "updates": {
@@ -17,7 +17,7 @@
       "**/*"
     ],
     "ios": {
-      "bundleIdentifier": "com.ad.truthtable",
+      "bundleIdentifier": "com.ad.truthtablecalculator",
       "supportsTablet": true
     },
     "android": {
