@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "Truth Table",
+    "name": "Truth Table Calc",
     "slug": "TruthTable",
     "privacy": "public",
     "platforms": [
@@ -9,7 +9,7 @@
     ],
     "version": "1.0",
     "orientation": "portrait",
-    "icon": "./assets/icon-droid.png",
+    "icon": "./assets/icon-ios.png",
     "updates": {
       "fallbackToCacheTimeout": 0
     },
